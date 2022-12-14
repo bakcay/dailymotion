@@ -1,0 +1,32 @@
+{
+    "name": "bakcay/dailymotion",
+    "description": "DailyMotion Api for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [],
+    "authors": [
+        {
+            "name": "Bünyamin AKÇAY",
+            "email": "bunyamin@bunyam.in"
+        }
+    ],
+    "require": {
+        "php" : ">=8.0",
+        "guzzlehttp/guzzle": ">7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpJunior\\DailyMotion\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bakcay\\DailyMotion\\DailyMotionProvider"
+            ],
+            "aliases": {
+                "DailyMotion": "Bakcay\\DailyMotion\\Facades\\DailyMotionFacade"
+            }
+        }
+    }
+}
