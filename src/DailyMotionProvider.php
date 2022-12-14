@@ -6,52 +6,51 @@ use Illuminate\Support\ServiceProvider;
 use Bakcay\DailyMotion\Facades\DailyMotionFacade;
 use Bakcay\DailyMotion\Services\DailyMotion;
 
-class DailyMotionProvider extends ServiceProvider
-{
-    /**
-     * Bootstrap services.
+class DailyMotionProvider extends ServiceProvider {
+   /**
+     * Perform post-registration booting of services.
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
+        // Publishing is only necessary when using the CLI.
+        if ($this->app->runningInConsole()) {
+            $this->bootForConsole();
+        }
+    }
+
+    /**
+     * Console-specific booting.
+     *
+     * @return void
+     */
+    protected function bootForConsole() {
+        // Publishing the configuration file.
         $this->publishes([
-            $this->configPath() => config_path('dailymotion.php'),
-        ]);
+            __DIR__ . '/../config/dailymotion.php' => config_path('dailymotion.php'),
+        ], 'dailymotion.config');
     }
 
     /**
-     * Register services.
+     * Register any package services.
      *
      * @return void
      */
-    public function register()
-    {
-        $this->mergeConfigFrom($this->configPath(), 'dailymotion');
+    public function register() {
+        $this->mergeConfigFrom(__DIR__ . '/../config/dailymotion.php', 'dailymotion');
 
-        $this->app->booting(function () {
-            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('DailyMotion', DailyMotionFacade::class);
-        });
-
-        $this->app->bind('dailymotion', function ($app) {
-            $config = $app['config'];
-            $daily = new DailyMotion($config);
-            $daily->setOptions([
-                'headers'  => [
-                    'Authorization' => 'Bearer '.$daily->getAccessToken(),
-                ],
-            ]);
-
-            return $daily;
+        // Register the service the package provides.
+        $this->app->singleton('dailymotion', function ($app) {
+            return new DailyMotion;
         });
     }
 
     /**
-     * @return string
+     * Get the services provided by the provider.
+     *
+     * @return array
      */
-    protected function configPath()
-    {
-        return __DIR__.'/../config/dailymotion.php';
+    public function provides() {
+        return ['dailymotion'];
     }
 }
