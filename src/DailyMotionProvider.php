@@ -3,8 +3,6 @@
 namespace Bakcay\DailyMotion;
 
 use Illuminate\Support\ServiceProvider;
-use Bakcay\DailyMotion\Facades\DailyMotionFacade;
-use Bakcay\DailyMotion\Services\DailyMotion;
 
 class DailyMotionProvider extends ServiceProvider {
    /**

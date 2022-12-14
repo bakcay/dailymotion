@@ -1,6 +1,6 @@
 <?php
 
-namespace Bakcay\DailyMotion\Services;
+namespace Bakcay\DailyMotion;
 
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Config\Repository;
@@ -135,7 +135,7 @@ class DailyMotion {
      *
      */
     public function getAccessToken() {
-        return cache()->remember('dailymotion_token', 60, function () {
+        return \Bakcay\DailyMotion\Services\cache()->remember('dailymotion_token', 60, function () {
             return $this->requestAccessToken();
         });
     }
