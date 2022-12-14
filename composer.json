@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpJunior\\DailyMotion\\": "src/"
+            "Bakcay\\DailyMotion\\": "src/"
         }
     },
     "extra": {
