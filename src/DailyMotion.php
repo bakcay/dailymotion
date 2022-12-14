@@ -15,7 +15,7 @@ class DailyMotion {
     private $video_url = false;
 
 
-    public function __construct(Repository $config) {
+    public function __construct() {
         $this->config = config('dailymotion');
         $this->client = new Client();
     }
